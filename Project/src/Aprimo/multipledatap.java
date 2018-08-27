@@ -1,6 +1,9 @@
 package Aprimo;
 
 
+//import java.util.Arrays;
+//import java.util.List;
+
 //import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.By;
@@ -14,8 +17,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 //import Aprimo.SetUp;
 //import Aprimo.ExcelDataConfig;
+//import org.testng.collections.Lists;
 
-public class ReadfromExcel
+public class multipledatap
 {
 	
 	WebDriver driver;
@@ -29,16 +33,16 @@ public class ReadfromExcel
 		driver=new ChromeDriver();
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
-		driver.get("https://aprimodm.com/Login2.aspx?ReturnUrl=/");
+		driver.get("https://staging.revenewnetwork.com/Login.aspx");
 		driver.findElement(By.id("lnksignon")).click();
 		Thread.sleep(200);
 		
 	}
 	
-	@Test(dataProvider = "testdata")
+	@Test(dataProvider = "testdata","testdata1")
 	public void setup(String Firstname,String Lastname, String Email, String phone, String Companyname, String StreetAddress, String City, String Country,
-					  String State, String zipcode, String phone1, String contactemail, String website, String industry, String brandreferral) 
-							  throws InterruptedException 
+					  String State, String zipcode, String phone1, String contactemail, String website, String industry, String brandreferral, 
+					  String username,String password) throws InterruptedException 
 	{
 		
 		//String a = driver.findElement(By.className("fancybox-iframe")).getAttribute("name");
@@ -85,7 +89,7 @@ public class ReadfromExcel
 		Thread.sleep(1000);
 		driver.get("https://staging.aprimodm.com/Login2.aspx");
 		Thread.sleep(1000);
-		driver.findElement(By.id("loginname")).sendKeys("varunverma");
+		driver.findElement(By.id("loginname")).sendKeys("username");
 		driver.findElement(By.id("password")).sendKeys("password");
 		driver.findElement(By.id("imgbtnSubmitAprimo")).click();
 		Thread.sleep(1000);
@@ -140,6 +144,29 @@ public class ReadfromExcel
 	
 		return data;
 	}
+	@DataProvider(name="testdata1")
+	public Object[][] passData1()
+	{
+		ExcelDataConfig Config = new ExcelDataConfig("C:\\Users\\monika\\Desktop\\readexcel.xlsx");
+		
+		int rows = Config.getRowCount(1);
+		
+		
+		int dataRowPosition = 1;
+		
+		Object[][] data = new Object[rows - dataRowPosition][1];
+		
+		for(int i = dataRowPosition; i < rows; i++) 
+		{
+			data[i - dataRowPosition][0]= Config.getData(0, i, 0);
+			//data[i - dataRowPosition][1]= Config.getData(0, i, 1);
+		
+		}
+	
+		return data;
+	}
+	
+	
 	
 	@AfterMethod
 	public void Quit() 
