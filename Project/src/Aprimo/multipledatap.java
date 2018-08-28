@@ -39,10 +39,10 @@ public class multipledatap
 		
 	}
 	
-	@Test(dataProvider = "testdata","testdata1")
-	public void setup(String Firstname,String Lastname, String Email, String phone, String Companyname, String StreetAddress, String City, String Country,
-					  String State, String zipcode, String phone1, String contactemail, String website, String industry, String brandreferral, 
-					  String username,String password) throws InterruptedException 
+	@Test(priority = 1, dataProvider = "testdata")
+	public void setup(String Firstname, String Lastname, String Email, String phone,String Companyname,String StreetAddress,String City,
+					  String Country, String State, String zipcode, String phone1, String contactemail,String website,String industry,
+					  String brandreferral,String username, String password ) throws InterruptedException 
 	{
 		
 		//String a = driver.findElement(By.className("fancybox-iframe")).getAttribute("name");
@@ -89,8 +89,8 @@ public class multipledatap
 		Thread.sleep(1000);
 		driver.get("https://staging.aprimodm.com/Login2.aspx");
 		Thread.sleep(1000);
-		driver.findElement(By.id("loginname")).sendKeys("username");
-		driver.findElement(By.id("password")).sendKeys("password");
+		driver.findElement(By.id("loginname")).sendKeys("varunverma");
+		driver.findElement(By.id("password")).sendKeys("@pr!m0D#");
 		driver.findElement(By.id("imgbtnSubmitAprimo")).click();
 		Thread.sleep(1000);
 		driver.get("https://staging.aprimodm.com/Registration/ApprovePartnerList.aspx");
@@ -111,62 +111,40 @@ public class multipledatap
 		System.out.println("User registered successfully.");
 		}
 		
-	@DataProvider(name="testdata")
-	public Object[][] passData()
-	{
-		ExcelDataConfig Config = new ExcelDataConfig("C:\\Users\\monika\\Desktop\\readexcel.xlsx");
-		
-		int rows = Config.getRowCount(0);
-		
-		
-		int dataRowPosition = 1;
-		
-		Object[][] data = new Object[rows - dataRowPosition][15];
-		
-		for(int i = dataRowPosition; i < rows; i++) 
+		@DataProvider(name="testdata")
+		public Object[][] passData()
 		{
-			data[i - dataRowPosition][0]= Config.getData(0, i, 0);
-			data[i - dataRowPosition][1]= Config.getData(0, i, 1);
-			data[i - dataRowPosition][2]= Config.getData(0, i, 2);
-			data[i - dataRowPosition][3]= Config.getData(0, i, 3);
-			data[i - dataRowPosition][4]= Config.getData(0, i, 4);
-			data[i - dataRowPosition][5]= Config.getData(0, i, 5);
-			data[i - dataRowPosition][6]= Config.getData(0, i, 6);
-			data[i - dataRowPosition][7]= Config.getData(0, i, 7);
-			data[i - dataRowPosition][8]= Config.getData(0, i, 8);
-			data[i - dataRowPosition][9]= Config.getData(0, i, 9);
-			data[i - dataRowPosition][10]= Config.getData(0, i, 10);
-			data[i - dataRowPosition][11]= Config.getData(0, i, 11);
-			data[i - dataRowPosition][12]= Config.getData(0, i, 12);
-			data[i - dataRowPosition][13]= Config.getData(0, i, 13);
-			data[i - dataRowPosition][14]= Config.getData(0, i, 14);
+			testdata Config = new testdata("C:\\Users\\monika\\Desktop\\readexcel.xlsx");
+			
+			int rows = Config.getRowCount(0);
+			
+			
+			int dataRowPosition = 1;
+			
+			Object[][] data = new Object[rows - dataRowPosition][15];
+			
+			for(int i = dataRowPosition; i < rows; i++) 
+			{
+				data[i - dataRowPosition][0]= Config.getData(0, i, 0);
+				data[i - dataRowPosition][1]= Config.getData(0, i, 1);
+				data[i - dataRowPosition][2]= Config.getData(0, i, 2);
+				data[i - dataRowPosition][3]= Config.getData(0, i, 3);
+				data[i - dataRowPosition][4]= Config.getData(0, i, 4);
+				data[i - dataRowPosition][5]= Config.getData(0, i, 5);
+				data[i - dataRowPosition][6]= Config.getData(0, i, 6);
+				data[i - dataRowPosition][7]= Config.getData(0, i, 7);
+				data[i - dataRowPosition][8]= Config.getData(0, i, 8);
+				data[i - dataRowPosition][9]= Config.getData(0, i, 9);
+				data[i - dataRowPosition][10]= Config.getData(0, i, 10);
+				data[i - dataRowPosition][11]= Config.getData(0, i, 11);
+				data[i - dataRowPosition][12]= Config.getData(0, i, 12);
+				data[i - dataRowPosition][13]= Config.getData(0, i, 13);
+				data[i - dataRowPosition][14]= Config.getData(0, i, 14);
+			}
+		
+			return data;
 		}
-	
-		return data;
-	}
-	@DataProvider(name="testdata1")
-	public Object[][] passData1()
-	{
-		ExcelDataConfig Config = new ExcelDataConfig("C:\\Users\\monika\\Desktop\\readexcel.xlsx");
 		
-		int rows = Config.getRowCount(1);
-		
-		
-		int dataRowPosition = 1;
-		
-		Object[][] data = new Object[rows - dataRowPosition][1];
-		
-		for(int i = dataRowPosition; i < rows; i++) 
-		{
-			data[i - dataRowPosition][0]= Config.getData(0, i, 0);
-			//data[i - dataRowPosition][1]= Config.getData(0, i, 1);
-		
-		}
-	
-		return data;
-	}
-	
-	
 	
 	@AfterMethod
 	public void Quit() 
