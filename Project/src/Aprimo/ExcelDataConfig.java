@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 
 
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -13,6 +14,7 @@ public class ExcelDataConfig
 
 	XSSFWorkbook wb;
 	XSSFSheet sheet1;
+	
 	
 	public ExcelDataConfig(String excelPath)
 	{
@@ -64,6 +66,13 @@ public class ExcelDataConfig
 		return row;
 	}
 	  
+	public int getcolumncount(int sheetIndex)
+	{
+		   sheet1 = wb.getSheetAt(sheetIndex);
+		   XSSFRow row = sheet1.getRow(0);
+	       int colCount = row.getLastCellNum();
+	       return colCount;
+	}
 	/* public int getColumnCount(int sheetIndex) {
 	int column = wb.getSheetAt(sheetIndex).getColumnWidth(column);
 	return column;

@@ -1,4 +1,4 @@
-package Aprimo;
+package aprimo_production;
 
 
 //import static org.testng.Assert.assertEquals;
@@ -15,7 +15,9 @@ import org.testng.annotations.Test;
 //import Aprimo.SetUp;
 //import Aprimo.ExcelDataConfig;
 
-public class test
+import Aprimo.ExcelDataConfig;
+
+public class RegistrationNewPartner
 {
 	
 	WebDriver driver;
@@ -83,7 +85,7 @@ public class test
 		Thread.sleep(500);
 		driver.findElement(By.id("MainContent_btnSubmit")).click();
 		Thread.sleep(1000);
-		driver.get("https://staging.aprimodm.com/Login2.aspx");
+		driver.get("https://aprimodm.com/Login2.aspx?ReturnUrl=/");
 		Thread.sleep(1000);
 		driver.findElement(By.id("loginname")).sendKeys("varunverma");
 		driver.findElement(By.id("password")).sendKeys("password");

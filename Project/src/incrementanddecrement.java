@@ -13,6 +13,7 @@ public class incrementanddecrement {
 		int l = 3;
 		int o = ++l;
 		System.out.println("Value of l:"+l);
+		System.out.println("Value of l:"+o);
 	}
 
 }

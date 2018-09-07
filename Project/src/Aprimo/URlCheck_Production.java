@@ -10,13 +10,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class URLCheck
+public class URlCheck_Production
 {
 	WebDriver driver;
 	
@@ -30,7 +30,7 @@ public class URLCheck
 		driver=new ChromeDriver();
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
-		driver.get("https://staging.aprimodm.com/Login2.aspx?ReturnUrl=/");
+		driver.get("https://www.aprimodm.com/Login2.aspx?ReturnUrl=/");
 		//driver.findElement(By.id("lnksignon")).click();
 		Thread.sleep(1000);
 		
@@ -40,20 +40,17 @@ public class URLCheck
 		driver.findElement(By.id("imgbtnSubmitAprimo")).click();
 		Thread.sleep(1000);
 		
-		JavascriptExecutor js = (JavascriptExecutor) driver;  
-        String value = js.executeScript("return AppData.WorkingAccountOwner;").toString();			
-
-		//js.executeScript("AppData",Arguments);
-		
 		//Store value of loginowner name from hidden field
+		JavascriptExecutor js = (JavascriptExecutor) driver;  
+        String value = js.executeScript("return AppData.WorkingAccountOwner;").toString();		
 		//WebElement hiddenInput = driver.findElement(By.id("hdnLoginOwner"));
 		//String value = hiddenInput.getAttribute("value");
-		System.out.println("value of hidden field" +value);
+		//System.out.println("value of hidden field" +value);
 		
 		//Check logged in user is partner, manufacturer
 		if(value.equals("Partners")) 
 		{
-									FileInputStream fis = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet_Staging.xlsx");
+									FileInputStream fis = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet.xlsx");
 									Workbook wb = new XSSFWorkbook(fis);
 									Sheet ws = wb.getSheet("partnerurl");
 									int rows = ws.getLastRowNum();
@@ -64,10 +61,8 @@ public class URLCheck
 											Cell urls = ws.getRow(i).getCell(0);
 											String ss = urls.toString();
 											driver.get(ss);
-											
 											Thread.sleep(200);
-											
-											System.out.println(ss);
+											//System.out.println(ss);
 											
 										}	
 									
@@ -76,7 +71,7 @@ public class URLCheck
 		else if(value.equals("Manufacturers"))
 		{
 			
-				FileInputStream fis1 = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet_Staging.xlsx");
+				FileInputStream fis1 = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet.xlsx");
 				Workbook wb1 = new XSSFWorkbook(fis1);
 				Sheet ws1 = wb1.getSheet("brandurl");
 				int rows = ws1.getLastRowNum();
@@ -87,17 +82,15 @@ public class URLCheck
 						Cell urls = ws1.getRow(i).getCell(0);
 						String ss1 = urls.toString();
 						driver.get(ss1);
-						
 						Thread.sleep(200);
-						
-						System.out.println(ss1);
+						//System.out.println(ss1);
 					}		
 					
 		} 
-		/*else if(value.equals("Revenew"))
+		else if(value.equals("Revenew"))
 		{
 			
-			FileInputStream fis1 = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet_Staging.xlsx");
+			FileInputStream fis1 = new FileInputStream("C:\\Users\\monika\\Desktop\\urlsheet.xlsx");
 			Workbook wb1 = new XSSFWorkbook(fis1);
 			Sheet ws1 = wb1.getSheet("Adminurl");
 			int rows = ws1.getLastRowNum();
@@ -108,13 +101,11 @@ public class URLCheck
 					Cell urls = ws1.getRow(i).getCell(0);
 					String ss1 = urls.toString();
 					driver.get(ss1);
-					
 					Thread.sleep(200);
-					
-					System.out.println(ss1);
+					//System.out.println(ss1);
 				}		
 				
-	}*/ else
+	} else
 			
 		{
 			System.out.println("User not exists");
@@ -126,15 +117,15 @@ public class URLCheck
 	public Object[][] passData()
 	{
 		
-		ExcelDataConfig Config = new ExcelDataConfig("C:\\Users\\monika\\Desktop\\urlsheet_Staging.xlsx");
+		ExcelDataConfig Config = new ExcelDataConfig("C:\\Users\\monika\\Desktop\\urlsheet.xlsx");
 		int rows = Config.getRowCount(0);
 		int dataRowPosition = 1;
-		Object[][] data = new Object[rows - dataRowPosition][2];
+		Object[][] data = new Object[rows - dataRowPosition][3];
 		for(int i = dataRowPosition; i < rows; i++) 
 		{
 			data[i - dataRowPosition][0]= Config.getData(0, i, 0);
 			data[i - dataRowPosition][1]= Config.getData(0, i, 1);
-			//data[i - dataRowPosition][2]= Config.getData(0, i, 2);
+			data[i - dataRowPosition][2]= Config.getData(0, i, 2);
 		}
 	
 		return data;
